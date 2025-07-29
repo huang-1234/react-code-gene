@@ -1,0 +1,32 @@
+{
+  "name": "server-gene",
+  "version": "1.0.0",
+  "description": "React代码自动生成后端服务",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --loader ts-node/esm src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "koa": "^2.14.2",
+    "koa-router": "^12.0.0",
+    "koa-bodyparser": "^4.4.1",
+    "koa-cors": "^0.0.16",
+    "koa-jwt": "^4.0.4",
+    "dotenv": "^16.3.1",
+    "axios": "^1.5.0",
+    "langchain": "^0.0.140"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.8",
+    "@types/koa-router": "^7.4.5",
+    "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-cors": "^0.0.4",
+    "@types/node": "^20.6.0",
+    "typescript": "^5.2.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1"
+  }
+}

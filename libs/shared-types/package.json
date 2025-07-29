@@ -1,0 +1,15 @@
+{
+  "name": "shared-types",
+  "version": "1.0.0",
+  "description": "React代码自动生成共享类型库",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
