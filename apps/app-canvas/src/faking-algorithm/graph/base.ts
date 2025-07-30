@@ -2,7 +2,7 @@
  * 基于邻接表的图实现，支持有向/无向图、带权边、动态增删节点
  */
 export class Graph<T extends string | number> {
-  private isDirected: boolean;
+  public readonly isDirected: boolean;
   private adjacencyList: Map<T, { vertex: T; weight?: number }[]>;
 
   constructor(isDirected = false) {
@@ -56,8 +56,19 @@ export class Graph<T extends string | number> {
   }
 
   // 辅助方法：获取所有顶点
-  getVertices<T extends number | string>() {
+  getVertices() {
     return Array.from(this.adjacencyList.keys());
+  }
+
+  // 获取边的数量
+  getEdgeCount(): number {
+    let count = 0;
+    this.adjacencyList.forEach(edges => {
+      count += edges.length;
+    });
+
+    // 如果是无向图，每条边被计算了两次
+    return this.isDirected ? count : count / 2;
   }
   /**
    * 将图转换为字符串

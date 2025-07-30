@@ -58,51 +58,191 @@ body {
 
 /* Graph页面样式 */
 .graph-page {
-  padding: 16px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.page-description {
+  font-size: 16px;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.graph-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.graph-section {
+  margin-bottom: 40px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.section-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #f9f9f9;
+}
+
+.section-header h2 {
+  margin-bottom: 8px;
+  color: var(--primary-color);
+  font-size: 22px;
+}
+
+.section-description {
+  color: #666;
+  font-size: 14px;
 }
 
 .graph-container {
   display: flex;
-  margin-top: 24px;
+  padding: 24px;
   gap: 24px;
 }
 
 .graph-visualization {
-  flex: 2;
+  flex: 3;
   background: white;
   padding: 16px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .graph-info {
-  flex: 1;
-  background: white;
-  padding: 16px;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-card {
+  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  border: 1px solid #eee;
 }
 
-.bar-chart-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
+.info-card h3 {
+  margin-bottom: 12px;
+  color: var(--text-color);
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
 }
 
-.bar-label {
-  width: 80px;
-  text-align: right;
-  padding-right: 16px;
-}
-
-.bar {
-  background-color: var(--primary-color);
+.adjacency-list {
+  background-color: #f1f1f1;
   border-radius: 4px;
+  padding: 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  overflow-x: auto;
+  color: #333;
+  border: 1px solid #ddd;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.graph-properties {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.graph-properties li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.graph-properties li:last-child {
+  border-bottom: none;
+}
+
+/* D3图表样式 */
+.d3-graph {
+  width: 100%;
+  height: 100%;
+  min-height: 450px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+/* 拓扑排序结果样式 */
+.topo-sequence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.topo-node {
   display: flex;
   align-items: center;
-  padding-left: 8px;
+  background-color: var(--primary-color);
   color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.topo-arrow {
+  margin: 0 4px;
+  color: #666;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.topo-explanation {
+  margin-top: 16px;
+  font-style: italic;
+  color: #666;
+  font-size: 14px;
+}
+
+.topo-error {
+  background-color: #fff5f5;
+  border: 1px solid #ffcccc;
+  color: #e74c3c;
+  padding: 12px;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+@media (max-width: 1024px) {
+  .graph-container {
+    flex-direction: column;
+  }
+
+  .graph-visualization, .graph-info {
+    flex: none;
+    width: 100%;
+  }
 }
 
 /* 状态指示器样式 */
@@ -264,6 +404,26 @@ button:hover {
 .mobile-warning p {
   margin-bottom: 1rem;
   line-height: 1.6;
+}
+
+/* 加载中样式 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 50px;
+}
+
+/* 404页面样式 */
+.not-found-page {
+  padding: 50px;
+  text-align: center;
+}
+
+.not-found-page h2 {
+  color: var(--accent-color);
+  margin-bottom: 16px;
 }
 
 @media (max-width: 768px) {
