@@ -1,42 +1,232 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --accent-color: #e74c3c;
+  --bg-color: #f9f9f9;
+  --text-color: #333;
+  --border-color: #ddd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #fff;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.status-indicator {
+  display: flex;
+  gap: 1rem;
+}
+
+.server-status,
+.socket-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.online {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.offline {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.loading {
+  background-color: #f39c12;
+  color: white;
+}
+
+.app-content {
+  display: flex;
+  flex: 1;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.canvas-section {
+  flex: 2;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+}
+
+.result-section {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.result-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.result-content {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.result-content pre {
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap;
+}
+
+.no-result {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+}
+
+.processing {
+  text-align: center;
+  padding: 2rem;
+  color: var(--primary-color);
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-top: 1rem;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.app-footer {
+  background-color: #fff;
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* 画布控制器样式 */
+.canvas-controller {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.canvas-container {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.canvas-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.canvas-controls form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.command-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.canvas-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* 移动端不支持提示 */
+.mobile-warning {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  z-index: 1000;
   padding: 2rem;
   text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.mobile-warning h2 {
+  margin-bottom: 1rem;
+  color: var(--accent-color);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.mobile-warning p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .app-content {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .mobile-warning {
+    display: flex;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
