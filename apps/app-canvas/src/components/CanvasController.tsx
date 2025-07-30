@@ -50,8 +50,9 @@ const CanvasController: React.FC<CanvasControllerProps> = ({
     const newAnnotation = {
       x: point.x,
       y: point.y,
-      text: '批注',
-      id: `annotation-${Date.now()}`,
+      // 点坐标、而不是文字
+      // text: `(${point.x}, ${point.y})`,
+      text: '.'
     };
 
     setAnnotations([...annotations, newAnnotation]);
