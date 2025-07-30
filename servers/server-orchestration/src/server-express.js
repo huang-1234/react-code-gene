@@ -1,8 +1,70 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const cors = require('cors');
-const { nanoid } = require('nanoid');
+// 模拟依赖
+const nanoid = {
+  nanoid: () => Math.random().toString(36).substring(2, 12)
+};
+
+// 模拟Express框架
+const express = function() {
+  const app = {
+    routes: {
+      get: {},
+      post: {}
+    },
+    use: function() { return app; },
+    get: function(path, handler) {
+      this.routes.get[path] = handler;
+      return app;
+    },
+    post: function(path, handler) {
+      this.routes.post[path] = handler;
+      return app;
+    },
+    json: function() { return function() {}; }
+  };
+  return app;
+};
+express.json = function() { return function() {}; };
+
+// 模拟HTTP服务器
+const http = {
+  createServer: function() {
+    return {
+      listen: function(port, callback) {
+        console.log(`服务器模拟启动在端口 ${port}`);
+        if (callback) callback();
+        return this;
+      }
+    };
+  }
+};
+
+// 模拟Socket.io
+const Server = function() {
+  return {
+    on: function(event, handler) {
+      console.log(`注册Socket.io事件: ${event}`);
+      if (event === 'connection') {
+        // 模拟连接
+        handler({
+          id: 'mock-socket-id',
+          on: function(event) {
+            console.log(`注册socket事件: ${event}`);
+          }
+        });
+      }
+      return this;
+    },
+    emit: function(event, data) {
+      console.log(`发送Socket.io事件: ${event}`, data);
+      return this;
+    }
+  };
+};
+
+// 模拟CORS中间件
+const cors = function() {
+  return function() {};
+};
 
 // 创建Express应用
 const app = express();
