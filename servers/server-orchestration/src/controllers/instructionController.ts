@@ -8,6 +8,9 @@ import { z } from 'zod';
 declare global {
   var io: any;
 }
+interface IError {
+  message: string;
+}
 
 // 指令请求验证模式
 const instructionSchema = z.object({
@@ -66,7 +69,7 @@ export const handleInstructions = async (ctx: Context) => {
         }
 
         console.log(`任务 ${taskId} 执行完成`);
-      } catch (error) {
+      } catch (error: any) {
         console.error(`任务 ${taskId} 执行失败:`, error);
 
         // 通过WebSocket发送任务失败通知
@@ -88,17 +91,17 @@ export const handleInstructions = async (ctx: Context) => {
       status: 'processing'
     };
 
-  } catch (error: Error) {
+  } catch (error: any) {
     console.error('指令处理错误:', error);
 
     // 处理不同类型的错误
     if (error instanceof z.ZodError) {
       ctx.status = 400;
       ctx.body = { error: '请求参数无效', details: error.errors };
-    } else if (error.message && error.message.includes('timeout')) {
+    } else if (error.message && error.message.includes('timeout') as string) {
       ctx.status = 504;
       ctx.body = { error: 'AI处理超时' };
-    } else if (error.message && error.message.includes('rate limit')) {
+    } else if (error.message && error.message.includes('rate limit') as string) {
       ctx.status = 429;
       ctx.body = { error: '超出AI配额' };
     } else {
