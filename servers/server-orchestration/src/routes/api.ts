@@ -1,6 +1,6 @@
 import Router from '@koa/router';
-import { handleInstructions } from '../controllers/instructionController.js';
-import { handleHealth } from '../controllers/healthController.js';
+import { handleInstructions } from '../controllers/instructionController';
+import { handleHealth } from '../controllers/healthController';
 
 const router = new Router({ prefix: '/api' });
 

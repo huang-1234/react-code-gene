@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // 导入路由
-import apiRouter from './routes/api.js';
+import apiRouter from './routes/api';
 
 // 创建Koa应用
 const app = new Koa();
@@ -27,6 +27,9 @@ const io = new Server(httpServer, {
     methods: ['GET', 'POST']
   }
 });
+
+// 将io设置为全局变量，以便在其他模块中使用
+global.io = io;
 
 // 中间件
 app.use(logger());
@@ -48,6 +51,13 @@ io.on('connection', (socket) => {
   // 任务状态更新
   socket.on('task:status', (data) => {
     console.log('Task status update:', data);
+
+    // 广播任务状态更新给所有客户端
+    io.emit('task:update', {
+      taskId: data.taskId,
+      status: data.status,
+      result: data.result
+    });
   });
 });
 
@@ -55,4 +65,6 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`💡 注意: Redis功能已预留接口但暂未实现`);
+  console.log(`💻 注意: 当前版本不支持移动端显示`);
 });
