@@ -19,29 +19,97 @@ body {
   color: var(--text-color);
 }
 
-.app-container {
+/* Logo样式 */
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* Canvas页面样式 */
+.canvas-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
+  gap: 16px;
 }
 
-.app-header {
-  background-color: #fff;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border-color);
+.canvas-content {
   display: flex;
-  justify-content: space-between;
+  flex: 1;
+  gap: 16px;
+}
+
+.canvas-section {
+  flex: 2;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+}
+
+.canvas-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 16px;
+}
+
+/* Graph页面样式 */
+.graph-page {
+  padding: 16px;
+}
+
+.graph-container {
+  display: flex;
+  margin-top: 24px;
+  gap: 24px;
+}
+
+.graph-visualization {
+  flex: 2;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.graph-info {
+  flex: 1;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.bar-chart-item {
+  display: flex;
   align-items: center;
+  margin-bottom: 16px;
 }
 
-.app-header h1 {
-  font-size: 1.5rem;
-  color: var(--primary-color);
+.bar-label {
+  width: 80px;
+  text-align: right;
+  padding-right: 16px;
 }
 
+.bar {
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  color: white;
+  font-weight: bold;
+}
+
+/* 状态指示器样式 */
 .status-indicator {
   display: flex;
   gap: 1rem;
+  margin-bottom: 16px;
 }
 
 .server-status,
@@ -66,21 +134,7 @@ body {
   color: white;
 }
 
-.app-content {
-  display: flex;
-  flex: 1;
-  padding: 2rem;
-  gap: 2rem;
-}
-
-.canvas-section {
-  flex: 2;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  padding: 1rem;
-}
-
+/* 结果区域样式 */
 .result-section {
   flex: 1;
   background-color: #fff;
@@ -133,15 +187,6 @@ body {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
-}
-
-.app-footer {
-  background-color: #fff;
-  padding: 1rem 2rem;
-  border-top: 1px solid var(--border-color);
-  text-align: center;
-  font-size: 0.8rem;
-  color: #888;
 }
 
 /* 画布控制器样式 */
@@ -222,7 +267,11 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-  .app-content {
+  .canvas-content {
+    flex-direction: column;
+  }
+
+  .graph-container {
     flex-direction: column;
   }
 
