@@ -1,8 +1,8 @@
 import { Context } from 'koa';
 import { nanoid } from 'nanoid';
-import { brandDesignFlow } from '../graphs/brandDesign.js';
+import { brandDesignFlow } from '../graphs/brandDesign';
 import { z } from 'zod';
-// import { saveWorkflowState } from '../utils/redis.js'; // Redis功能预留
+// import { saveWorkflowState } from '../utils/redis'; // Redis功能预留
 
 // 为WebSocket添加全局类型声明
 declare global {

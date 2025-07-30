@@ -1,5 +1,5 @@
 import { StateGraph } from '@langchain/langgraph';
-import { logoAgent, colorAgent } from '../agents/designAgents.js';
+import { logoAgent, colorAgent } from '../agents/designAgents';
 
 // 定义状态类型
 interface BrandDesignState {

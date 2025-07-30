@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // 导入路由
-import apiRouter from './routes/api.js';
+import apiRouter from './routes/api';
 
 // 创建Koa应用
 const app = new Koa();

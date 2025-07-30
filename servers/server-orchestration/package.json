@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AI工作流编排服务",
   "main": "dist/index.js",
-  "type": "module",
+
   "scripts": {
     "dev": "nodemon --watch src/**/* -e ts --exec ts-node src/index.ts",
     "build": "tsc",
