@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import CanvasController from '../../components/CanvasController';
 import useCanvasStore from '../../stores/canvasStore';
@@ -137,4 +137,4 @@ function CanvasPage() {
   );
 }
 
-export default CanvasPage;
+export default React.memo(CanvasPage);
