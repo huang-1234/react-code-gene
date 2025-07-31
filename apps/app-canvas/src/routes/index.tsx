@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react';
 import { Spin } from 'antd';
 import loadable from '@loadable/component';
-const ApiTestPage = loadable(() => import('@/pages/ApiTestPage'));
-const CodeGenPage = loadable(() => import('@/pages/CodeGenPage'));
 // 懒加载页面组件
-const CanvasPage = loadable(() => import('../pages/Canvas'))
-const GraphPage = loadable(() => import('../pages/Graph'))
+const ApiTestPage = loadable(/** webpackChunkName: "ApiTestPage" */ () => import('@/pages/ApiTestPage'));
+const CodeGenPage = loadable(/** webpackChunkName: "CodeGenPage" */ () => import('@/pages/CodeGenPage'));
+const SettingPage = loadable(/** webpackChunkName: "SettingPage" */ () => import('@/pages/Setting'));
+const CanvasPage = loadable(/** webpackChunkName: "CanvasPage" */ () => import('../pages/Canvas'))
+const GraphPage = loadable(/** webpackChunkName: "GraphPage" */ () => import('../pages/Graph'))
 
 // 加载中组件
 const Loading = () => (
@@ -67,6 +68,14 @@ const routes: AppRouteObject[] = [
         ),
       }
     ],
+  },
+  {
+    path: '/setting',
+    element: (
+      <Suspense fallback={<Loading />}>
+        <SettingPage />
+      </Suspense>
+    ),
   },
   {
     path: '*',

@@ -105,6 +105,9 @@ importers:
 
   apps/app-canvas:
     dependencies:
+      '@loadable/component':
+        specifier: ^5.16.7
+        version: 5.16.7(react@18.3.1)
       axios:
         specifier: ^1.5.0
         version: 1.11.0
@@ -145,6 +148,9 @@ importers:
       '@types/d3':
         specifier: 7.4.3
         version: 7.4.3
+      '@types/loadable__component':
+        specifier: ^5.13.10
+        version: 5.13.10
       '@types/node':
         specifier: 20.19.9
         version: 20.19.9
@@ -901,6 +907,12 @@ packages:
     resolution: {integrity: sha512-co6nRylPrLGY/C3JYxhHt6cxLq07P086O7K3QaZH7SFFErIN9wSzJonpvhZR07DEUq6eK6wKgh2ORxA/NcjSRQ==}
     engines: {node: '>=18'}
 
+  '@loadable/component@5.16.7':
+    resolution: {integrity: sha512-XvkFixLUOTEaj8lI7uwc4nf8Wmq3IulYG7SZHCWcPm/Li5gjJDFfIkgWOLPnD7jqPJVtAG9bEz4SCek+SpHYYg==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1373,6 +1385,9 @@ packages:
 
   '@types/koa__router@12.0.4':
     resolution: {integrity: sha512-Y7YBbSmfXZpa/m5UGGzb7XadJIRBRnwNY9cdAojZGp65Cpe5MAP3mOZE7e3bImt8dfKS4UFcR16SLH8L/z7PBw==}
+
+  '@types/loadable__component@5.13.10':
+    resolution: {integrity: sha512-2/LjmgG1JcGPj7T3NViq7BB5cvOA0s63gL3Gv+FPULj2L+3ExWfsNQcsFPUIOoGsVUJeZxgNPf320JZDyxjtCQ==}
 
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
@@ -2339,6 +2354,9 @@ packages:
 
   header-case@2.0.4:
     resolution: {integrity: sha512-H/vuk5TEEVZwrR0lp2zed9OCo1uAILMlx0JEMgC26rzyJJ3N1v6XkwHHXJQdR2doSjcGPM6OKPYoJgf0plJ11Q==}
+
+  hoist-non-react-statics@3.3.2:
+    resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -3500,6 +3518,9 @@ packages:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
       react: ^18.3.1
+
+  react-is@16.13.1:
+    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
@@ -4681,6 +4702,13 @@ snapshots:
       - encoding
       - ws
 
+  '@loadable/component@5.16.7(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.2
+      hoist-non-react-statics: 3.3.2
+      react: 18.3.1
+      react-is: 16.13.1
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -5209,6 +5237,10 @@ snapshots:
   '@types/koa__router@12.0.4':
     dependencies:
       '@types/koa': 2.15.0
+
+  '@types/loadable__component@5.13.10':
+    dependencies:
+      '@types/react': 18.2.15
 
   '@types/mime@1.3.5': {}
 
@@ -6445,6 +6477,10 @@ snapshots:
     dependencies:
       capital-case: 1.0.4
       tslib: 2.8.1
+
+  hoist-non-react-statics@3.3.2:
+    dependencies:
+      react-is: 16.13.1
 
   html-escaper@2.0.2: {}
 
@@ -7832,6 +7868,8 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
+
+  react-is@16.13.1: {}
 
   react-is@18.3.1: {}
 
