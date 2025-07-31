@@ -1,9 +1,11 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Spin } from 'antd';
-
+import loadable from '@loadable/component';
+const ApiTestPage = loadable(() => import('@/pages/ApiTestPage'));
+const CodeGenPage = loadable(() => import('@/pages/CodeGenPage'));
 // 懒加载页面组件
-const CanvasPage = lazy(() => import('../pages/canvas'));
-const GraphPage = lazy(() => import('../pages/graph'));
+const CanvasPage = loadable(() => import('../pages/Canvas'))
+const GraphPage = loadable(() => import('../pages/Graph'))
 
 // 加载中组件
 const Loading = () => (
@@ -15,7 +17,8 @@ const Loading = () => (
 // 路由配置类型
 export interface AppRouteObject {
   path: string;
-  element: React.ReactNode;
+  element?: React.ReactNode;
+  children?: AppRouteObject[];
 }
 
 // 路由配置
@@ -43,6 +46,27 @@ const routes: AppRouteObject[] = [
         <GraphPage />
       </Suspense>
     ),
+  },
+  {
+    path: '/dev',
+    children: [
+      {
+        path: '/dev/api-test',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ApiTestPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/dev/code-gen',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CodeGenPage />
+          </Suspense>
+        ),
+      }
+    ],
   },
   {
     path: '*',

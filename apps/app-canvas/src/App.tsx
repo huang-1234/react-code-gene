@@ -57,11 +57,11 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {/* 移动端警告 */}
-      <div className="mobile-warning">
+      {/* <div className="mobile-warning">
         <h2>不支持移动设备</h2>
         <p>AI画布控制器需要在桌面环境下使用</p>
         <p>请使用电脑访问此应用</p>
-      </div>
+      </div> */}
 
       <Sider
         breakpoint="lg"
@@ -70,15 +70,28 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         onCollapse={(value) => setCollapsed(value)}
         style={{
           background: token.colorBgContainer,
+          boxShadow: '2px 0 8px rgba(0, 0, 0, 0.06)',
+          overflow: 'auto',
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          height: '100vh',
         }}
+        width={220}
       >
-        <div className="logo" style={{ height: '32px', margin: '16px', background: 'rgba(0, 0, 0, 0.2)' }} />
+        <div className="logo">
+          <h3 style={{ margin: 0, textAlign: 'center', color: '#1890ff', fontWeight: 'bold' }}>AI画布系统</h3>
+        </div>
         <Menu
           theme="light"
           mode="inline"
-          selectedKeys={selectedKeys}
           onClick={handleMenuClick}
+          selectedKeys={selectedKeys}
           items={getAntdMenuItems(menuItems)}
+          style={{
+            height: 'calc(100vh - 64px)',
+            overflowY: 'auto'
+          }}
         />
       </Sider>
       <Layout>
@@ -108,7 +121,7 @@ function App() {
               route.path === '*' ? (
                 route.element as any
               ) : (
-                <AppLayout>{route.element as any}</AppLayout>
+                <AppLayout>{route.element}</AppLayout>
               )
             }
           />

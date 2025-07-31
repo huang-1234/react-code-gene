@@ -21,10 +21,48 @@ body {
 
 /* Logo样式 */
 .logo {
-  height: 32px;
+  height: 50px;
   margin: 16px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 16px;
+}
+
+/* 侧边栏菜单样式 */
+.ant-menu {
+  border-right: none !important;
+}
+
+.ant-menu-item {
+  margin: 4px 0 !important;
+  height: 45px !important;
+  line-height: 45px !important;
+}
+
+.ant-menu-submenu-title {
+  margin: 4px 0 !important;
+  height: 45px !important;
+  line-height: 45px !important;
+}
+
+/* 确保菜单项文本可见 */
+.ant-menu-title-content {
+  color: #333;
+  font-size: 14px;
+}
+
+/* 选中菜单项样式 */
+.ant-menu-item-selected {
+  background-color: #e6f7ff !important;
+}
+
+/* 菜单图标样式 */
+.ant-menu-item .anticon,
+.ant-menu-submenu-title .anticon {
+  font-size: 16px;
+  margin-right: 10px;
 }
 
 /* Canvas页面样式 */
