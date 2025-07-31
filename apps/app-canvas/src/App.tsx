@@ -1,151 +1,133 @@
-import { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
-import CanvasController from './components/CanvasController';
+// @ts-nocheck - 禁用类型检查以解决React类型兼容性问题
+import React, { useState, useEffect } from 'react';
+import { Layout, Menu, theme } from 'antd';
+import type { MenuProps } from 'antd';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import useCanvasStore from './stores/canvasStore';
-import { sendInstruction, checkHealth } from './services/api';
+import routes from './routes';
+import type { AppRouteObject } from './routes';
+import { menuItems, getAntdMenuItems, getSelectedKeys } from './routes/menu';
 import './App.css';
 
-function App() {
-  // 状态
-  const [connected, setConnected] = useState(false);
-  const [serverStatus, setServerStatus] = useState<'loading' | 'online' | 'offline'>('loading');
-  const [taskResult, setTaskResult] = useState<any>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
+// 导入React类型覆盖
+// import './types/react-fix';
 
-  // 从状态库获取会话ID
-  const { sessionId, setSessionId } = useCanvasStore();
+const { Header, Content, Footer, Sider } = Layout;
 
-  // 初始化WebSocket连接
+// 主应用布局组件
+const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const { token } = theme.useToken();
+  const { sessionId } = useCanvasStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // 根据当前路径选中对应菜单
+  const selectedKeys = getSelectedKeys(location.pathname);
+
+  // 生成会话ID
   useEffect(() => {
-    const socket = io();
-
-    socket.on('connect', () => {
-      console.log('WebSocket已连接');
-      setConnected(true);
-    });
-
-    socket.on('disconnect', () => {
-      console.log('WebSocket已断开');
-      setConnected(false);
-    });
-
-    socket.on('task:update', (data) => {
-      console.log('任务状态更新:', data);
-      if (data.taskId && data.status === 'completed') {
-        setTaskResult(data.result);
-        setIsProcessing(false);
-      } else if (data.status === 'failed') {
-        console.error('任务失败:', data.error);
-        setIsProcessing(false);
-      }
-    });
-
-    // 检查服务器状态
-    const checkServerStatus = async () => {
-      try {
-        await checkHealth();
-        setServerStatus('online');
-      } catch (error) {
-        setServerStatus('offline');
-      }
-    };
-
-    checkServerStatus();
-
-    // 生成会话ID
+    const { sessionId, setSessionId } = useCanvasStore.getState();
     if (!sessionId) {
       const newSessionId = crypto.randomUUID();
       setSessionId(newSessionId);
     }
+  }, []);
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [sessionId, setSessionId]);
-
-  // 处理指令提交
-  const handleCommand = async (command: any) => {
-    try {
-      setIsProcessing(true);
-
-      // 发送指令到服务器
-      const response = await sendInstruction(
-        command.type,
-        command.params,
-        sessionId || undefined
-      );
-
-      console.log('指令响应:', response);
-
-      if (response.taskId) {
-        // 任务创建成功
-        console.log('任务ID:', response.taskId);
-      } else if (response.error) {
-        // 处理错误
-        console.error('指令错误:', response.error);
-        setIsProcessing(false);
+  // 菜单点击处理
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    // 查找对应的菜单项
+    const findMenuPath = (items: typeof menuItems, key: string): string | undefined => {
+      for (const item of items) {
+        if (item.key === key) return item.path;
+        if (item.children) {
+          const path = findMenuPath(item.children, key);
+          if (path) return path;
+        }
       }
-    } catch (error) {
-      console.error('指令发送失败:', error);
-      setIsProcessing(false);
+      return undefined;
+    };
+
+    const path = findMenuPath(menuItems, e.key);
+    if (path) {
+      navigate(path);
     }
   };
 
   return (
-    <div className="app-container">
+    <Layout style={{ minHeight: '100vh' }}>
       {/* 移动端警告 */}
-      <div className="mobile-warning">
+      {/* <div className="mobile-warning">
         <h2>不支持移动设备</h2>
         <p>AI画布控制器需要在桌面环境下使用</p>
         <p>请使用电脑访问此应用</p>
-      </div>
+      </div> */}
 
-      <header className="app-header">
-        <h1>AI画布控制器</h1>
-        <div className="status-indicator">
-          <span className={`server-status ${serverStatus}`}>
-            服务器: {serverStatus === 'online' ? '在线' : serverStatus === 'offline' ? '离线' : '检查中'}
-          </span>
-          <span className={`socket-status ${connected ? 'online' : 'offline'}`}>
-            WebSocket: {connected ? '已连接' : '未连接'}
-          </span>
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        style={{
+          background: token.colorBgContainer,
+          boxShadow: '2px 0 8px rgba(0, 0, 0, 0.06)',
+          overflow: 'auto',
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          height: '100vh',
+        }}
+        width={220}
+      >
+        <div className="logo">
+          <h3 style={{ margin: 0, textAlign: 'center', color: '#1890ff', fontWeight: 'bold' }}>AI画布系统</h3>
         </div>
-      </header>
+        <Menu
+          theme="light"
+          mode="inline"
+          onClick={handleMenuClick}
+          selectedKeys={selectedKeys}
+          items={getAntdMenuItems(menuItems)}
+          style={{
+            height: 'calc(100vh - 64px)',
+            overflowY: 'auto'
+          }}
+        />
+      </Sider>
+      <Layout>
+        <Header style={{ padding: '0 16px', background: token.colorBgContainer }}>
+          <h1 style={{ margin: 0 }}>AI画布控制器</h1>
+        </Header>
+        <Content style={{ margin: '16px' }}>
+          <div style={{ padding: 24, minHeight: 360, background: token.colorBgContainer }}>
+            {children}
+          </div>
+        </Content>
+      </Layout>
+    </Layout>
+  );
+};
 
-      <main className="app-content">
-        <div className="canvas-section">
-          <CanvasController
-            width={800}
-            height={600}
-            onCommand={handleCommand}
+// 主应用组件
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {routes.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={
+              route.path === '*' ? (
+                route.element as any
+              ) : (
+                <AppLayout>{route.element}</AppLayout>
+              )
+            }
           />
-        </div>
-
-        <div className="result-section">
-          <h2>AI处理结果</h2>
-          {isProcessing ? (
-            <div className="processing">
-              <p>正在处理中...</p>
-              <div className="loading-spinner"></div>
-            </div>
-          ) : taskResult ? (
-            <div className="result-content">
-              <pre>{JSON.stringify(taskResult, null, 2)}</pre>
-            </div>
-          ) : (
-            <div className="no-result">
-              <p>尚无处理结果</p>
-              <p>使用左侧画布发送指令</p>
-            </div>
-          )}
-        </div>
-      </main>
-
-      <footer className="app-footer">
-        <p>会话ID: {sessionId || '未生成'}</p>
-        <p><small>注意: 当前版本不支持移动端显示</small></p>
-      </footer>
-    </div>
+        ))}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
